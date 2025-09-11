@@ -98,9 +98,9 @@ jobs:
     - name: Configuration Customization - Build_phicomm_k2g
       run: |
         if [[ "${{ inputs.source_branch }}" == *"lede"* ]]; then
-          CONFIG_FILE="lede-phicomm-k2g.config"
+          CONFIG_FILE="config/lede-phicomm-k2g.config"
         elif [[ "${{ inputs.source_branch }}" == *"immortalwrt"* ]]; then 
-          CONFIG_FILE="imm_phicomm_k2g.config"
+          CONFIG_FILE="config/imm_phicomm_k2g.config"
         else
           echo "Unknown source code repository."
           exit 1

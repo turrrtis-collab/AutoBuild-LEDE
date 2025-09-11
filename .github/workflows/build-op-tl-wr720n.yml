@@ -6,7 +6,7 @@ on:
   
 env:
   REPO_URL: https://github.com/openwrt/openwrt
-  CONFIG_FILE: 'TL_WR720N.config'
+  CONFIG_FILE: 'config/TL_WR720N.config'
   REPO_BRANCH: openwrt-19.07
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true

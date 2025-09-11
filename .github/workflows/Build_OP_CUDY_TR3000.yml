@@ -92,9 +92,9 @@ jobs:
     - name: Configuration Customization - Build_CUDY_TR3000
       run: |
         if [[ "${{ inputs.device_config }}" == *"U-Boot"* ]]; then
-            CONFIG_FILE="CUDY_TR3000-UBOOT.config"
+            CONFIG_FILE="config/CUDY_TR3000-UBOOT.config"
         elif [[ "${{ inputs.device_config }}" == *"V1"* ]]; then
-            CONFIG_FILE="CUDY_TR3000_V1.config"
+            CONFIG_FILE="config/CUDY_TR3000_V1.config"
         else
             echo "worng device!"
             exit 1

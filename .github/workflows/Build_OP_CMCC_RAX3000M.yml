@@ -91,9 +91,9 @@ jobs:
     - name: Configuration Customization - Build_CMCC_RAX3000M
       run: |
         if [[ "${{ inputs.device_config }}" == *"nand"* ]]; then
-            CONFIG_FILE="CMCC_RAX3000M_NAND.config"
+            CONFIG_FILE="config/CMCC_RAX3000M_NAND.config"
         elif [[ "${{ inputs.device_config }}" == *"emmc"* ]]; then
-            CONFIG_FILE="CMCC_RAX3000M_EMMC.config"
+            CONFIG_FILE="config/CMCC_RAX3000M_EMMC.config"
         else
             echo "worng device!"
             exit 1

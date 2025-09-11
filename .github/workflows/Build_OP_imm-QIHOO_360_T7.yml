@@ -7,7 +7,7 @@ on:
   
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt.git
-  CONFIG_FILE: 'imm-QIHOO_360_T7.config'
+  CONFIG_FILE: 'config/imm-QIHOO_360_T7.config'
   REPO_BRANCH: master
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
