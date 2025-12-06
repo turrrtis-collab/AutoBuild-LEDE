@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 set -e
 
 DTS="target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dts"
