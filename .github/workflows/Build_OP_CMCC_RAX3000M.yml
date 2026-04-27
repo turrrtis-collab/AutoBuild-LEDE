@@ -88,17 +88,17 @@ jobs:
         ln -sf /mnt/openwrt/staging_dir openwrt/staging_dir
         ln -sf /mnt/openwrt/build_dir openwrt/build_dir
 
-    - name: Patch Makefiles
-      working-directory: ./openwrt
-      run: |
-        F_QS="feeds/nas_luci/luci/luci-app-quickstart/Makefile"
-        sed -i 's/ +luci-app-store//g' $F_QS
-
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
+
+    - name: Patch Makefiles
+      working-directory: ./openwrt
+      run: |
+        F_QS="feeds/nas_luci/luci/luci-app-quickstart/Makefile"
+        sed -i 's/ +luci-app-store//g' $F_QS
 
     - name: Configuration Customization - Build_CMCC_RAX3000M
       run: |
