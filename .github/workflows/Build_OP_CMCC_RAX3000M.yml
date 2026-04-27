@@ -22,7 +22,7 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -64,7 +64,7 @@ jobs:
         sudo chown ${USER}:${GROUPS} /workdir
         sudo timedatectl set-timezone "${TZ}"
         echo "status=success" >> ${GITHUB_OUTPUT}
-        
+
     - name: Clone source code
       id: codes
       if: ${{ steps.init.outputs.status }} == 'success' && !cancelled()
@@ -73,6 +73,11 @@ jobs:
         cd openwrt
         chmod +x ../dts.sh && ../dts.sh
         echo 'src-git modem https://github.com/FUjr/modem_feeds.git;main' >> feeds.conf.default
+        echo 'src-git nas https://github.com/linkease/nas-packages.git' >> feeds.conf.default
+        echo 'src-git nas_luci https://github.com/linkease/nas-packages-luci.git' >> feeds.conf.default
+        echo 'src-git dockerman https://github.com/lisaac/luci-app-dockerman.git' >> feeds.conf.default
+        echo 'src-git docker_lib https://github.com/lisaac/luci-lib-docker.git' >> feeds.conf.default
+        echo 'src-git torrserver https://github.com/turrtis/packages.git' >> feeds.conf.default
 
     - name: Free up disk space
       env:
@@ -81,8 +86,14 @@ jobs:
         sudo mkdir -p -m 777 /mnt/openwrt/dl /mnt/openwrt/staging_dir /mnt/openwrt/build_dir
         ln -sf /mnt/openwrt/dl openwrt/dl
         ln -sf /mnt/openwrt/staging_dir openwrt/staging_dir
-        ln -sf /mnt/openwrt/build_dir openwrt/build_dir     
-        
+        ln -sf /mnt/openwrt/build_dir openwrt/build_dir
+
+    - name: Patch Makefiles
+      working-directory: ./openwrt
+      run: |
+        F_QS="feeds/nas_luci/luci/luci-app-quickstart/Makefile"
+        sed -i 's/ +luci-app-store//g' $F_QS
+
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
@@ -102,7 +113,7 @@ jobs:
         [[ -d "files" ]] && mv -f files openwrt/files
         [[ -e "${CONFIG_FILE}" ]] && cp -f ${CONFIG_FILE} openwrt/.config
         cd openwrt && make defconfig
-        
+
     - name: Download package
       id: package
       run: |
@@ -148,7 +159,7 @@ jobs:
       run: |
           echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
           touch release.txt
-          echo -e "使用lede源码编译CMCC_RAX3000M的固件" >> release.txt
+          echo -e "lede CMCC_RAX3000M" >> release.txt
           echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware to release
